@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+</head>
+<body>
+<a href="{{ url_for('homepage', current_list=1) }}">Books</a>
+<a href="{{ url_for('homepage', current_list=2) }}">Authors</a>
+
+
+
+{% block content %}
+
+{% if selected_list == '1' %}
+<h1>Książki</h1>
+{% for i in books %}
+<ul>
+    <li><h2><a href="/books/{{ i.id }}/details">{{ i.title }}</a></h2></li>
+</ul>
+{% endfor %}
+{% endif %}
+
+{% endblock %}
+
+{% if selected_list == '2' %}
+<h1>Autorzy</h1>
+
+{% for i in authors %}
+<ul>
+    <li><h2><a href="/author/{{ i.id }}/details">{{ i.author_name }}</a></h2></li>
+</ul>
+{% endfor %}
+{% endif %}
+
+
+<form method="post" action="/">
+    {% for i in form %}
+
+    {{i.label}}
+    {{ i }}
+
+    {% endfor %}
+    <input type="submit" value="wyślij">
+</form>
+</body>
+</html>

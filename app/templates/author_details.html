@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="{{ url_for('homepage', current_list=1) }}">Books</a>
+<a href="{{ url_for('homepage', current_list=2) }}">Authors</a>
+
+<h2>{{ author.author_name }}</h2>
+
+<h3>Napisał:
+    {% for i in author.books %}
+    <a href="/books/{{ i.id }}/details">{{ i.title }}</a>
+    {% endfor %}
+</h3>
+<h3>Przemianuj:</h3>
+
+<form method="post" action="/author/{{author.id}}/details">
+    {% for i in form %}
+
+    {{i.label}}
+    {{ i }}
+
+    {% endfor %}
+    <input type="submit" value="wyślij">
+</form>
+{{ author.id }}
+<a href="/author/{{ author.id }}/delete">Usuń autora</a>
+</body>
+</html>
+

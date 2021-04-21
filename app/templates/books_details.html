@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<a href="{{ url_for('homepage', current_list=1) }}">Books</a>
+<a href="{{ url_for('homepage', current_list=2) }}">Authors</a>
+
+
+<h1>Tytuł</h1>
+<h2>{{ book.title }}</h2>
+<h1>Opis</h1>
+<h2>{{ book.description }}</h2>
+
+<h2>Napisana w {{ book.created }} roku.</h2>
+
+
+<h3>Napisana przez:
+    {% for author in book.authors.all() %}
+    <a href="/author/{{author.id}}/details">{{ author.author_name }}</a>
+
+    {% endfor %}
+
+    <a href="/book/{{ book.id }}/add_author">Dodaj authora</a>
+
+</h3>
+
+<h4>Edytuj info:</h4>
+<form method="post" action="/books/{{book_id}}/details">
+    {% for field in form2 %}
+    <tr>
+        {% if field.label != "csrf_token" %}
+        <th>{{ field.label }}</th>
+        {% endif %}
+        <td>{{ field }}</td>
+    </tr>
+    {% endfor %}
+    <input type="submit" value="wyślij">
+</form>
+
+<h4>Wpis o stanie:</h4>
+<form method="post" action="/books/{{book_id}}/details">
+    {% for field in form %}
+    <tr>
+        {% if field.label != "csrf_token" %}
+        <th>{{ field.label }}</th>
+        {% endif %}
+        <td>{{ field }}</td>
+    </tr>
+    {% endfor %}
+    <input type="submit" value="wyślij">
+</form>
+
+<a href="/book/{{book.id}}/hire/delete">Usuń wpisy</a><br>
+
+
+{% for hire in book.hire.all() %}
+{{ hire.borrower }}{{ hire.date_hire }}{{ hire.where }}<br>
+{% endfor %}
+
+<a href="/book/{{book_id}}/delete">Usuń książkę</a>
+</body>
+</html>
+

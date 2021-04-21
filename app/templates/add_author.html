@@ -1,0 +1,11 @@
+<form method="post" action="/book/{{ book_id }}/add_author">
+    {% for field in form %}
+    <tr>
+        {% if field.label != "csrf_token" %}
+        <th>{{ field.label }}</th>
+        {% endif %}
+        <td>{{ field }}</td>
+    </tr>
+    {% endfor %}
+    <input type="submit" value="wyślij">
+</form>
