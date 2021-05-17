@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))    # 1
 
@@ -9,9 +10,9 @@ class Config:
 
    SQLALCHEMY_DATABASE_URI = (                           # 3
            os.environ.get('DATABASE_URL') or
-           'sqlite:///' + os.path.join(BASE_DIR, 'library.db')
+           'sqlite:///' + os.path.join(BASE_DIR, '../library.db')
    )
 
    SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-   FLASK_APP = "biblioteka.py"
+   load_dotenv()

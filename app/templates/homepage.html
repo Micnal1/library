@@ -4,14 +4,32 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
+    {% extends "index.html" %}
+
 </head>
 <body>
 <a href="{{ url_for('homepage', current_list=1) }}">Books</a>
 <a href="{{ url_for('homepage', current_list=2) }}">Authors</a>
 
 
-
 {% block content %}
+
+
+<h1>Bibioteka Książek</h1>
+<div>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link {% if selected_list == '1' %}active{% endif %}"
+               href="{{ url_for('homepage', current_list=1) }}">Books</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if selected_list == '2' %}active{% endif %}"
+               href="{{ url_for('homepage', current_list=2) }}">Authors</a>
+        </li>
+
+    </ul>
+</div>
+
 
 {% if selected_list == '1' %}
 <h1>Książki</h1>
@@ -22,7 +40,6 @@
 {% endfor %}
 {% endif %}
 
-{% endblock %}
 
 {% if selected_list == '2' %}
 <h1>Autorzy</h1>
@@ -38,11 +55,15 @@
 <form method="post" action="/">
     {% for i in form %}
 
-    {{i.label}}
+    {% if i.widget.input_type != 'hidden' %}{{i.label}}{% endif %}
     {{ i }}
 
     {% endfor %}
     <input type="submit" value="wyślij">
 </form>
+
+
+{% endblock %}
+
 </body>
 </html>

@@ -5,10 +5,9 @@
     <title>Title</title>
 </head>
 <body>
+{% extends "index.html" %}
 
-<a href="{{ url_for('homepage', current_list=1) }}">Books</a>
-<a href="{{ url_for('homepage', current_list=2) }}">Authors</a>
-
+{% block content %}
 <h2>{{ author.author_name }}</h2>
 
 <h3>Napisał:
@@ -19,7 +18,7 @@
 <h3>Przemianuj:</h3>
 
 <form method="post" action="/author/{{author.id}}/details">
-    {% for i in form %}
+    {% for i in form if i.widget.input_type != 'hidden' %}
 
     {{i.label}}
     {{ i }}
@@ -27,8 +26,9 @@
     {% endfor %}
     <input type="submit" value="wyślij">
 </form>
-{{ author.id }}
 <a href="/author/{{ author.id }}/delete">Usuń autora</a>
+<a href="{{ url_for('homepage', current_list=1) }}">Home</a>
+{% endblock %}
 </body>
 </html>
 

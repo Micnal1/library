@@ -6,12 +6,12 @@
 </head>
 <body>
 
-<a href="{{ url_for('homepage', current_list=1) }}">Books</a>
-<a href="{{ url_for('homepage', current_list=2) }}">Authors</a>
+{% extends "index.html" %}
 
-
+{% block content %}
 <h1>Tytuł</h1>
 <h2>{{ book.title }}</h2>
+<br>
 <h1>Opis</h1>
 <h2>{{ book.description }}</h2>
 
@@ -27,26 +27,30 @@
     <a href="/book/{{ book.id }}/add_author">Dodaj authora</a>
 
 </h3>
-
+<br>
 <h4>Edytuj info:</h4>
 <form method="post" action="/books/{{book_id}}/details">
     {% for field in form2 %}
     <tr>
         {% if field.label != "csrf_token" %}
+        {% if field.widget.input_type != 'hidden' %}
         <th>{{ field.label }}</th>
+        {% endif %}
         {% endif %}
         <td>{{ field }}</td>
     </tr>
     {% endfor %}
     <input type="submit" value="wyślij">
 </form>
-
+<br>
 <h4>Wpis o stanie:</h4>
 <form method="post" action="/books/{{book_id}}/details">
     {% for field in form %}
     <tr>
         {% if field.label != "csrf_token" %}
+        {% if field.widget.input_type != 'hidden' %}
         <th>{{ field.label }}</th>
+        {% endif %}
         {% endif %}
         <td>{{ field }}</td>
     </tr>
@@ -61,7 +65,9 @@
 {{ hire.borrower }}{{ hire.date_hire }}{{ hire.where }}<br>
 {% endfor %}
 
-<a href="/book/{{book_id}}/delete">Usuń książkę</a>
+<a href="/book/{{book_id}}/delete">Usuń książkę</a><br>
+<a href="{{ url_for('homepage', current_list=1) }}">Home</a>
+{% endblock %}
 </body>
 </html>
 
